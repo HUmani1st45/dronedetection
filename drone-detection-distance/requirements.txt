@@ -1,0 +1,15 @@
+
+ultralytics>=8.0.0
+torch>=2.2
+torchvision
+opencv-python
+numpy
+pandas
+matplotlib
+albumentations
+pyyaml
+tqdm
+scikit-learn
+filterpy
+lapx
+# Optional: onnx, tensorrt, openvino, etc.

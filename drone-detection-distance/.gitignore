@@ -1,0 +1,25 @@
+
+# Data & artifacts
+data/
+results/
+wandb/
+runs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.env
+.venv
+.ipynb_checkpoints/
+
+# Checkpoints
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# OS
+.DS_Store
+Thumbs.db
