@@ -1,6 +1,0 @@
-train:
-  - datasets/virtual/images/train
-  - datasets/real/images/train
-val: datasets/real/images/val
-names:
-  0: drone
