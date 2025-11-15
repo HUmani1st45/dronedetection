@@ -1,0 +1,9 @@
+# virtual.yaml
+path: C:/Users/giorg/Downloads/drone-detection-distance-template/drone-detection-distance/data
+
+train: virtual/train/images
+val: real_LRDD/val/images
+test: real_LRDD/test/images
+
+names:
+  0: drone
