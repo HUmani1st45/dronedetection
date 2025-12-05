@@ -1,0 +1,8 @@
+path: C:/Users/giorg/Downloads/drone-detection-distance-template/drone-detection-distance/data/real_LRDD
+
+train: train/images
+val: val/images   # used during training
+test: test/images # optional, for final evaluation
+
+names:
+  0: drone

@@ -1,0 +1,9 @@
+# mixed.yaml
+path: C:/Users/giorg/Downloads/drone-detection-distance-template/drone-detection-distance/data/mixed_LRDD
+
+train: train/images
+val: val/images     # copied from real_LRDD/val
+test: test/images   # copied from real_LRDD/test
+
+names:
+  0: drone
