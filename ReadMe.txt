@@ -10,30 +10,36 @@ To compare the performance of YOLO (You Only Look Once) and Faster R-CNN for dro
 
 /
 ├── drone_detection_distance/
-│   ├── scripts/
-│   │   └── deterministic_var_nobbox.py  <-- Main file for data preparation 
+│   ├── **scripts/**
+│   │   └── deterministic_var_nobbox.py  <-- Main file for initial landscape data preparation
+│   ├── **data_manager_scripts/**       <-- **Scripts for generating mixed (landscape/city) datasets**
 │   ├── notebooks/
 │   │   ├── yolo_python.ipynb            <-- YOLO training/evaluation pipeline
 │   │   ├── fast_rnn_tse.ipynb           <-- Faster R-CNN training/t-SNE pipeline
 │   │   └── runs_yolo/                   <-- **Output folder for all YOLO statistics (mAP, loss, etc.)**
 │   └── tsne_plots/                    <-- **Output folder for t-SNE visualizations**
-├── real.yaml                          <-- Data config: 100% Real Data
-├── virtual.yaml                       <-- Data config: 100% Virtual Data
-├── mixed.yaml                         <-- Data config: Standard Mix (e.g., 50/50)
-├── mixed_70_30.yaml                   <-- Data config: Specific 70% Real / 30% Virtual
+├── datapaths_yaml/                    <-- **Data Configuration Files (YAML)**
+│   ├── real.yaml                      <-- Data config: 100% Real Data
+│   ├── virtual.yaml                   <-- Data config: 100% Virtual Data
+│   ├── mixed.yaml                     <-- Data config: Standard Mix (e.g., 50/50)
+│   └── mixed_70_30.yaml               <-- Data config: Specific 70% Real / 30% Virtual
 └── README.md                          <-- (This is the file being built)
 
+
+---
 
 ## Project Pipeline Overview
 
 The pipeline is executed in three main sequential phases: Data Configuration, Model Training & Evaluation, and Feature Analysis.
 
 ### 1. Data Configuration (YAML Files)
-These files define the dataset splits used for training, allowing researchers to quickly test different domain adaptation scenarios (real vs. virtual data ratios).
+These files define the dataset splits used for training, allowing researchers to quickly test different domain adaptation scenarios (real vs. virtual data ratios). They are located in the **`datapaths_yaml/`** directory.
 
 *   **`real.yaml`**: Used for baseline evaluation on only real-world data.
 *   **`virtual.yaml`**: Used for baseline evaluation on only simulated data.
 *   **`mixed.yaml` / `mixed_70_30.yaml`**: Used for testing model robustness and transfer learning performance on mixed datasets.
+
+---
 
 ### 2. Model Training & Evaluation (Notebooks)
 
@@ -42,6 +48,21 @@ These files define the dataset splits used for training, allowing researchers to
 | **Data Generation** | `drone_detection_distance/scripts/deterministic_var_nobbox.py` | **MANDATORY FIRST STEP.** This script creates the necessary dataset and file structures required for training the models. | N/A (creates input data) |
 | **YOLO Pipeline** | `drone_detection_distance/notebooks/yolo_python.ipynb` | Loads a specified YAML configuration, trains the **YOLO** model, and evaluates its performance, focusing on metrics like mAP and distance-based detection rates. | `drone_detection_distance/notebooks/runs_yolo/` |
 | **Faster R-CNN Pipeline**| `drone_detection_distance/notebooks/fast_rnn_tse.ipynb` | Loads a specified YAML configuration, trains the **Faster R-CNN** model, evaluates performance, and proceeds to feature analysis. | N/A (model checkpoints stored separately) |
+
+### 2.1.  Data Generation and Experiment Setup
+
+The **`data_manager_scripts`** folder, a peer directory to `scripts/` under `drone_detection_distance/`, contains the specific scripts used to generate the mixed city and landscape datasets.
+
+The correct implementation of the analysis requires the following steps:
+
+1.  **Generate Landscape Images**: Run the **`deterministic_var_nobbox`** script (located in `scripts/`) to download the initial landscape images.
+2.  **Setup Directories**: Recreate the necessary folders.
+3.  **Run Landscape Experiments**: Execute the experiments on the landscape dataset.
+4.  **Generate City Images**: Run the **`deterministic_var^2_nobbox_city`** script (located within `data_manager_scripts/`) to create the synthetic city images.
+5.  **Integrate City Data**: Use the **`citytoreal`** script (also within `data_manager_scripts/`) to add the generated city images to the main virtual data folder.
+6.  **Run Domain Adaptation**: Execute the experiments using the domain-adapted YOLO models on the new mixed (landscape and city) datasets.
+
+---
 
 ### 3. Feature Analysis (t-SNE)
 
