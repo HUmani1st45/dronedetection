@@ -17,7 +17,7 @@ if os.path.exists(mixed_dir):
 for split in ["train", "val", "test"]:
     for sub in ["images", "labels"]:
         os.makedirs(os.path.join(mixed_dir, split, sub), exist_ok=True)
-print("📁 Fresh mixed dataset folders created.")
+print(" Fresh mixed dataset folders created.")
 
 # (your dataset-mixing logic continues below)
 # e.g.:
@@ -55,7 +55,7 @@ virtual_imgs = get_images(virtual_train)
 random.shuffle(real_imgs)
 random.shuffle(virtual_imgs)
 
-# here there is no randomization of the ection ( cirtual vs real )
+# here there is no randomization of the section ( virtual vs real )
 selected_real = real_imgs[:n_real]
 selected_virtual = virtual_imgs[:n_virtual]
 
@@ -90,3 +90,4 @@ copy_folder(os.path.join(base_dir, "real_LRDD", "test"), output_test)
 
 print(f"✅ Mixed training set built: {n_real} real + {n_virtual} virtual")
 print(f"✅ Validation and test sets copied from real dataset.")
+
